@@ -1,6 +1,6 @@
 /**
  * File: Modified Monopoly (Monopoly GO)
- * Authors: Ajai Jeyakaran & Andy Zhou
+ * Authors: Ajai Jeyakaran & Andy Zhou, Modifications by Ajai Jeyakaran
  * Date Created: May 29, 2023
  * Date Modified: June 19, 2023
  */
@@ -20,8 +20,7 @@ public class Main {
             dice2 = ran.nextInt(6) + 1; // random dice 2
             index += dice1;
             index += dice2;
-            System.out.println(
-                "Dice 1 rolled " + dice1 + "\n" + "Dice 2 rolled " + dice2 + "\nYou've rolled " + (dice1 + dice2)); // total
+            System.out.println("Dice 1 rolled " + dice1 + "\n" + "Dice 2 rolled " + dice2 + "\nYou've rolled " + (dice1 + dice2)); // total
             // rolled
             if (dice1 == dice2) {
                 System.out.println("\n" + player + " rolled a double! The dice will be rolled again.");
@@ -35,7 +34,7 @@ public class Main {
             if (!(ownership[index].equals("bank")) && !(ownership[index].equals("na")) &&
                 !(board[index].equals(player))) { // if a property is unowned
                 if (index == 9 || index == 20) { // indexes if electric company and water works
-                    rentalfees[index] = -(dice1 + dice2) * 5;
+                    rentalfees[index] = -(dice1 + dice2) * 15;
                 } else if (index == 4 || index == 11 || index == 17 || index == 24) { // indexes of all the railroads
                     // each individual railroad for checking ownership
                     String owe = ownership[index];
@@ -134,10 +133,8 @@ public class Main {
             if (choice.equals("buy")) {
                 balance += price[index];
                 ownership[index] = player;
-                System.out.println(player + "'s Current Balance $" + balance);
             } else if (choice.equals("auction")) {
-                System.out.println("\nEnter the amount you would like to bid for " + board[index] +
-                    " if you wish to stop or not bid at all enter 0 when it's your turn.");
+                System.out.println("\nEnter the amount you would like to bid for " + board[index] + " if you wish to stop or not bid at all enter 0 when it's your turn.");
                 int bidding = 0;
                 boolean player1 = true;
                 boolean player2 = true;
@@ -275,10 +272,10 @@ public class Main {
 
     public static void main(String[] args) {
         int totalplayer = 4; // 4 players default
-        int player1bal = 1500; // balances of the start of game
-        int player2bal = 1500;
-        int player3bal = 1500;
-        int player4bal = 1500;
+        int player1bal = 1000; // balances of the start of game
+        int player2bal = 1000;
+        int player3bal = 1000;
+        int player4bal = 1000;
         int index1 = 0; // assumes everyone starts at GO
         int index2 = 0;
         int index3 = 0;
@@ -287,19 +284,19 @@ public class Main {
         int jail2 = 0;
         int jail3 = 0;
         int jail4 = 0;
-        int[] price = { 200, -50, -60, -200, -200, -100, -100, 0, -140, -150, -140, -200, -180, -180, 0, -220, -220,
+        int[] price = {200, -50, -60, -200, -200, -100, -100, 0, -140, -150, -140, -200, -180, -180, 0, -220, -220,
                 -200, -260, -260, -150, 0, -300, -300, -200, -350, -100, -400 };// the prices of the properties
         String[] ownership = { "na", "bank", "bank", "na", "bank", "bank", "bank", "na", "bank", "bank", "bank", "bank",
                 "bank", "bank", "na", "bank", "bank", "bank", "bank", "bank", "bank", "na", "bank", "bank", "bank",
                 "bank", "na", "bank" }; // who owns the property
-        int[] rentalfees = { 0, -77, -79, 0, 0, -81, -81, 0, -85, 0, -85, 0, -89, -89, 0, -93, -93, 0, -97,
+        int[] rentalfees = {0, -77, -79, 0, 0, -81, -81, 0, -85, 0, -85, 0, -89, -89, 0, -93, -93, 0, -97,
                 -97, 0, 0, -101, -101, 0, -110, 0, -125 }; // rental cost of properties
         String[] board = { "GO", "Mediterranean Avenue", "Baltic Avenue", "Income Tax", "Reading Railroad",
                 "Oriental Avenue", "Vermont Avenue", "Jail Cell", "St. Charles Place", "Electric Company",
                 "States Avenue", "Pennsylvania Railroad", "St. James Place", "Tennessee Avenue", "Free Parking",
                 "Kentucky Avenue", "Indiana Avenue", "B. & O. Railroad", "Atlantic Avenue", "Ventnor Avenue",
                 "Water Works", "GO TO JAIL", "Pacific Avenue", "North Carolina Avenue", "Short Line",
-                "Park               Place", "Luxury Tax", "Boardwalk" }; // the board tiles
+                "Park Place", "Luxury Tax", "Boardwalk" }; // the board tiles
 
         Scanner i = new Scanner(System.in);
         System.out.println("Welcome to Monopoly GO created by Ajai Jeyakaran and Andy Zhou. Enjoy the game!!!\n");
