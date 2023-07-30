@@ -2,15 +2,15 @@
  * File: Modified Monopoly (Monopoly GO)
  * Authors: Ajai Jeyakaran & Andy Zhou, Modifications by Ajai Jeyakaran
  * Date Created: May 29, 2023
- * Date Modified: June 19, 2023
+ * Date Modified: July 30, 2023
  */
+
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static int[] landed(String player, int index, int balance, String[] board, String[] ownership,
-        int[] rentalfees) {
+    public static int[] landed(String player, int index, int balance, String[] board, String[] ownership, int[] rentalfees) {
         Random ran = new Random();
         int dice1 = 0;
         int dice2 = 0;
@@ -32,7 +32,7 @@ public class Main {
             }
             System.out.println("\n" + player + " landed on " + board[index]);
             if (!(ownership[index].equals("bank")) && !(ownership[index].equals("na")) &&
-                !(board[index].equals(player))) { // if a property is unowned
+                    !(board[index].equals(player))) { // if a property is unowned
                 if (index == 9 || index == 20) { // indexes if electric company and water works
                     rentalfees[index] = -(dice1 + dice2) * 15;
                 } else if (index == 4 || index == 11 || index == 17 || index == 24) { // indexes of all the railroads
@@ -56,9 +56,9 @@ public class Main {
             ran.nextInt();
         }
         int[] arr = {
-            index,
-            balance,
-            rentalfees[index]
+                index,
+                balance,
+                rentalfees[index]
         };
         return arr;
     }
@@ -119,12 +119,12 @@ public class Main {
     }
 
     public static int balance(String player, int index, int balance, String[] ownership, int[] price, int[] rentalfees,
-        String[] board, int player1bal, int player2bal, int player3bal, int player4bal) {
+            String[] board, int player1bal, int player2bal, int player3bal, int player4bal) {
         Scanner i = new Scanner(System.in);
         if (ownership[index].equals("bank")) {
             if (rentalfees[index] != 0) {
-                System.out.println("\nYou can buy it for $" + -price[index] + ", you have $" + balance +
-                    " and it has a rental fee of $" + -rentalfees[index]);
+                System.out.println("\nYou can buy it for $" + -price[index] + ", you have $" + balance
+                        + " and it has a rental fee of $" + -rentalfees[index]);
             } else {
                 System.out.println("\nYou can buy it for $" + -price[index] + ", you have $" + balance);
             }
@@ -134,7 +134,8 @@ public class Main {
                 balance += price[index];
                 ownership[index] = player;
             } else if (choice.equals("auction")) {
-                System.out.println("\nEnter the amount you would like to bid for " + board[index] + " if you wish to stop or not bid at all enter 0 when it's your turn.");
+                System.out.println("\nEnter the amount you would like to bid for " + board[index]
+                        + " if you wish to stop or not bid at all enter 0 when it's your turn.");
                 int bidding = 0;
                 boolean player1 = true;
                 boolean player2 = true;
@@ -197,7 +198,7 @@ public class Main {
                 }
                 System.out.println(winner);
                 arr = new String[] {
-                    -bidding + "", winner
+                        -bidding + "", winner
                 };
             }
 
@@ -211,7 +212,7 @@ public class Main {
                 System.out.println("nothing happens here!");
             } else if (board[index].equals("GO TO JAIL")) {
                 System.out.println(
-                    "go directly to jail, you won't be able to roll the dice for the following three turns");
+                        "go directly to jail, you won't be able to roll the dice for the following three turns");
             } else if (board[index].equals("Luxury Tax")) {
                 balance -= 100;
                 System.out.println("You paid a total of $100 towards tax");
@@ -232,7 +233,8 @@ public class Main {
 
         String choice = i.nextLine();
         while (!(choice.toLowerCase().equals("yes")) && !(choice.toLowerCase().equals("no"))) {
-            System.out.print("invalid, would you like to pay $50 to get out jail + your current balance is $" + balance + ": ");
+            System.out.print(
+                    "invalid, would you like to pay $50 to get out jail + your current balance is $" + balance + ": ");
             choice = i.nextLine();
         }
         if (choice.equals("yes")) {
@@ -241,15 +243,15 @@ public class Main {
             jail = 4;
         }
         int[] arr = new int[] {
-            balance,
-            jail
+                balance,
+                jail
         };
         return arr;
     }
 
-    public static String[] bankrupt(int balance, String[] ownership, String player) { // check for bankruptcy in players 
+    public static String[] bankrupt(int balance, String[] ownership, String player) { // check for bankruptcy in players
         System.out.println(player + " is now bankrupt they have a balance of $" + balance +
-            " all their assets will now be unowned and free to be purchased if landed on");
+                " all their assets will now be unowned and free to be purchased if landed on");
         for (int i = 0; i < ownership.length; i++) {
             if (ownership[i].equals(player)) {
                 ownership[i] = "bank";
@@ -258,7 +260,8 @@ public class Main {
         return ownership;
     }
 
-    public static void announcement(int player1bal, int player2bal, int player3bal, int player4bal, String player1, String player2, String player3, String player4) { // checks who doesn''t have a balance less than 0
+    public static void announcement(int player1bal, int player2bal, int player3bal, int player4bal, String player1,
+            String player2, String player3, String player4) { // checks who doesn''t have a balance less than 0
         if (player1bal > 0) {
             System.out.println("Congratulations " + player1 + " your are the winner of this game with $" + player1bal);
         } else if (player2bal > 0) {
@@ -271,7 +274,23 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Scanner i = new Scanner(System.in);
         int totalplayer = 4; // 4 players default
+        System.out.print("How many players are playing (2-4): ");
+        boolean flag = true;
+        while (flag) {
+            while (!(i.hasNextInt())) {
+                System.out.print("invalid, How many players are playing (2-4): ");
+                i.nextLine();
+            }
+            totalplayer = i.nextInt();
+            if (!(2 <= totalplayer && totalplayer <= 4)) {
+                System.out.print("invalid, How many players are playing (2-4): ");
+            } else {
+                flag = false;
+            }
+        }
+
         int player1bal = 1000; // balances of the start of game
         int player2bal = 1000;
         int player3bal = 1000;
@@ -284,12 +303,14 @@ public class Main {
         int jail2 = 0;
         int jail3 = 0;
         int jail4 = 0;
-        int[] price = {200, -50, -60, -200, -200, -100, -100, 0, -140, -150, -140, -200, -180, -180, 0, -220, -220,
+        String player3 = "";
+        String player4 = "";
+        int[] price = { 200, -50, -60, -200, -200, -100, -100, 0, -140, -150, -140, -200, -180, -180, 0, -220, -220,
                 -200, -260, -260, -150, 0, -300, -300, -200, -350, -100, -400 };// the prices of the properties
         String[] ownership = { "na", "bank", "bank", "na", "bank", "bank", "bank", "na", "bank", "bank", "bank", "bank",
                 "bank", "bank", "na", "bank", "bank", "bank", "bank", "bank", "bank", "na", "bank", "bank", "bank",
                 "bank", "na", "bank" }; // who owns the property
-        int[] rentalfees = {0, -77, -79, 0, 0, -81, -81, 0, -85, 0, -85, 0, -89, -89, 0, -93, -93, 0, -97,
+        int[] rentalfees = { 0, -77, -79, 0, 0, -81, -81, 0, -85, 0, -85, 0, -89, -89, 0, -93, -93, 0, -97,
                 -97, 0, 0, -101, -101, 0, -110, 0, -125 }; // rental cost of properties
         String[] board = { "GO", "Mediterranean Avenue", "Baltic Avenue", "Income Tax", "Reading Railroad",
                 "Oriental Avenue", "Vermont Avenue", "Jail Cell", "St. Charles Place", "Electric Company",
@@ -297,29 +318,32 @@ public class Main {
                 "Kentucky Avenue", "Indiana Avenue", "B. & O. Railroad", "Atlantic Avenue", "Ventnor Avenue",
                 "Water Works", "GO TO JAIL", "Pacific Avenue", "North Carolina Avenue", "Short Line",
                 "Park Place", "Luxury Tax", "Boardwalk" }; // the board tiles
-
-        Scanner i = new Scanner(System.in);
         System.out.println("Welcome to Monopoly GO created by Ajai Jeyakaran and Andy Zhou. Enjoy the game!!!\n");
         String player1 = validation1("1");
         String player2 = validation1("2");
-        while (player2.toLowerCase().equals(player1.toLowerCase())) { //check to see if any if the player has the same name and ask for input again
+        while (player2.toLowerCase().equals(player1.toLowerCase())) { // check to see if any if the player has the same
+                                                                      // name and ask for input again
             System.out.print("Invalid, ");
             player2 = validation1("2");
         }
 
-        String player3 = validation1("3");
-        while (player3.toLowerCase().equals(player1.toLowerCase()) ||
-            player3.toLowerCase().equals(player2.toLowerCase())) {
-            System.out.print("Invalid, ");
+        if (totalplayer >= 3) {
             player3 = validation1("3");
+            while (player3.toLowerCase().equals(player1.toLowerCase()) ||
+                    player3.toLowerCase().equals(player2.toLowerCase())) {
+                System.out.print("Invalid, ");
+                player3 = validation1("3");
+            }
         }
 
-        String player4 = validation1("4");
-        while (player4.toLowerCase().equals(player1.toLowerCase()) ||
-            player4.toLowerCase().equals(player2.toLowerCase()) ||
-            player4.toLowerCase().equals(player3.toLowerCase())) {
-            System.out.print("Invalid, ");
+        if (totalplayer >= 4) {
             player4 = validation1("4");
+            while (player4.toLowerCase().equals(player1.toLowerCase()) ||
+                    player4.toLowerCase().equals(player2.toLowerCase()) ||
+                    player4.toLowerCase().equals(player3.toLowerCase())) {
+                System.out.print("Invalid, ");
+                player4 = validation1("4");
+            }
         }
 
         while (totalplayer != 1) {
@@ -330,12 +354,12 @@ public class Main {
                 index1 = arr[0];
                 player1bal = arr[1];
                 if (index1 == 4 || index1 == 11 || index1 == 17 || index1 == 24 || index1 == 9 || index1 == 20) {
-                    rentalfees[index1] = arr[2]; //railroad checking
+                    rentalfees[index1] = arr[2]; // railroad checking
                 }
                 player1bal = balance(player1, index1, player1bal, ownership, price, rentalfees, board, player1bal,
-                    player2bal, player3bal, player4bal);
+                        player2bal, player3bal, player4bal);
                 if (!(ownership[index1].equals("na")) && !(ownership[index1].equals("bank")) &&
-                    !(ownership[index1].equals(player1))) {
+                        !(ownership[index1].equals(player1))) {
                     if (ownership[index1].equals(player2)) {
                         player2bal += rentalfees[index1];
                         System.out.println(player2 + "'s current balance is $" + player2bal);
@@ -348,12 +372,12 @@ public class Main {
                     }
                     System.out.println(player1 + "'s current balance is $" + player1bal);
                 }
-                if (player1bal < 0) { //when balance less than 0
+                if (player1bal < 0) { // when balance less than 0
                     ownership = bankrupt(player1bal, ownership, player1);
                     totalplayer--;
                     jail1 = 10;
                 }
-                if (board[index1].equals("GO TO JAIL")) { //if land on GO TO JAIL TILE
+                if (board[index1].equals("GO TO JAIL")) { // if land on GO TO JAIL TILE
                     jail1 = 1;
                 }
             } else if (player1bal > 0) {
@@ -363,7 +387,8 @@ public class Main {
                 if (jail1 == 4) {
                     jail1 = 0;
                 } else {
-                    System.out.println("You are in jail... you still have " + (4 - jail1 + "") + " turns left until you're out of jail");
+                    System.out.println("You are in jail... you still have " + (4 - jail1 + "")
+                            + " turns left until you're out of jail");
                     jail1++;
                 }
             } else {
@@ -379,7 +404,7 @@ public class Main {
                     rentalfees[index2] = arr[2];
                 }
                 player2bal = balance(player2, index2, player2bal, ownership, price, rentalfees, board, player1bal,
-                    player2bal, player3bal, player4bal);
+                        player2bal, player3bal, player4bal);
                 if (!(ownership[index2].equals("na")) && !(ownership[index2].equals("bank"))) {
                     if (ownership[index2].equals(player1)) {
                         player1bal -= rentalfees[index2];
@@ -409,16 +434,18 @@ public class Main {
                     jail2 = 0;
                 } else {
                     System.out.println("You are in jail... you still have " + (4 - jail2 + "") +
-                        " turns left until you're out of jail");
+                            " turns left until you're out of jail");
                     jail2++;
                 }
             } else {
                 System.out.println("You are bankrupt.");
             }
 
-            System.out.print("\n" + player3 + "'s turn:");
-            i.nextLine();
-            if (jail3 == 0) {
+            if(totalplayer >= 3){
+                System.out.print("\n" + player3 + "'s turn:");
+                i.nextLine();
+            }
+            if (jail3 == 0 && totalplayer >= 3) {
                 int[] arr = landed(player3, index3, player3bal, board, ownership, rentalfees);
                 index3 = arr[0];
                 player3bal = arr[1];
@@ -426,9 +453,9 @@ public class Main {
                     rentalfees[index3] = arr[2];
                 }
                 player3bal = balance(player3, index3, player3bal, ownership, price, rentalfees, board, player1bal,
-                    player2bal, player3bal, player4bal);
+                        player2bal, player3bal, player4bal);
                 if (!(ownership[index3].equals("na")) &&
-                    !(ownership[index3].equals("bank"))) {
+                        !(ownership[index3].equals("bank"))) {
                     if (ownership[index3].equals(player1)) {
                         player1bal -= rentalfees[index3];
                         System.out.println(player1 + "'s current balance is $" + player1bal);
@@ -457,16 +484,18 @@ public class Main {
                     jail3 = 0;
                 } else {
                     System.out.println("You are in jail... you still have " + (4 - jail2 + "") +
-                        " turns left until you're out of jail");
+                            " turns left until you're out of jail");
                     jail2++;
                 }
             } else {
                 System.out.println("You are bankrupt.");
             }
 
-            System.out.print("\n" + player4 + "'s turn:");
-            i.nextLine();
-            if (jail4 == 0) {
+            if(totalplayer >= 4){
+                System.out.print("\n" + player4 + "'s turn:");
+                i.nextLine();
+            }
+            if (jail4 == 0 && totalplayer >= 4) {
                 int[] arr = landed(player4, index4, player4bal, board, ownership, rentalfees);
                 index4 = arr[0];
                 player4bal = arr[1];
@@ -474,9 +503,9 @@ public class Main {
                     rentalfees[index4] = arr[2];
                 }
                 player4bal = balance(player4, index4, player4bal, ownership, price, rentalfees, board, player1bal,
-                    player2bal, player3bal, player4bal);
+                        player2bal, player3bal, player4bal);
                 if (!(ownership[index4].equals("na")) &&
-                    !(ownership[index4].equals("bank"))) {
+                        !(ownership[index4].equals("bank"))) {
                     if (ownership[index4].equals(player1)) {
                         player1bal -= rentalfees[index4];
                         System.out.println(player1 + "'s current balance is $" + player1bal);
@@ -505,7 +534,7 @@ public class Main {
                     jail4 = 0;
                 } else {
                     System.out.println("You are in jail... you still have " + (4 - jail2 + "") +
-                        " turns left until you're out of jail");
+                            " turns left until you're out of jail");
                     jail2++;
                 }
             } else {
